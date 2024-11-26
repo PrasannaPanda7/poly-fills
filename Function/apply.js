@@ -7,6 +7,7 @@ const tempobj2 = {
 };
 
 const greet = function (greetMsg) {
+  console.log("this: ", greetMsg);
   return `${greetMsg}, ${this.name}`;
 };
 
@@ -22,7 +23,7 @@ Function.prototype.myApply = function (context = {}, args = []) {
   context = context || window;
   const tempFn = Symbol();
   context[tempFn] = this;
-  const result = context[tempFn](args);
+  const result = context[tempFn](...args);
   delete context[tempFn];
   return result;
 };

@@ -1,5 +1,8 @@
 const myObject = {
   name: "John",
+  greet: function (message) {
+    return `${message}, my name is ${this.name}`;
+  },
 };
 
 const newObj = {
@@ -12,7 +15,7 @@ const sayHello = function () {
 
 console.log(sayHello.call(newObj));
 
-Function.prototype.myCall = function (context, ...args) {
+Function.prototype.Call = function (context, ...args) {
   if (typeof this !== "function") throw new Error(`${this}, not a function`);
 
   context = context || window;
@@ -23,4 +26,6 @@ Function.prototype.myCall = function (context, ...args) {
   return result;
 };
 
-console.log(sayHello.myCall(newObj));
+console.log(sayHello.Call(newObj));
+
+console.log(myObject.greet.Call(newObj, "Wakata"));

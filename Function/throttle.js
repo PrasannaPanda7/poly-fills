@@ -1,16 +1,13 @@
 const Throttle = (callback, delay) => {
-  let timer;
+  let currTime = 0;
   return function (...args) {
-    if (timer) return;
-    const context = this;
-    timer = setTimeout(() => {
+    let endTime = new Date().getTime();
+    if (endTime - currTime >= delay || currTime === 0) {
+      const context = this;
       const res = callback.apply(context, args);
-      if (typeof args[args.length - 1] === "function") {
-        // check the last args and if it is a function then execute it
-        args[args.length - 1](res);
-      }
-      timer = null;
-    }, delay);
+      console.log(res);
+      currTime = endTime;
+    }
   };
 };
 
@@ -18,9 +15,9 @@ const greet = (msg) => `${msg}`;
 
 const throttledGreet = Throttle(greet, 1000);
 
-throttledGreet("hello", (res) => console.log(res));
-throttledGreet("hello2", (res) => console.log(res));
+throttledGreet("hello");
+throttledGreet("hello2");
 
 setTimeout(() => {
-  throttledGreet("hello3", (res) => console.log(res));
+  throttledGreet("hello3");
 }, 2000);

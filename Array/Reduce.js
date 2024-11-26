@@ -9,7 +9,7 @@ Array.prototype.Reduce = function (callbackFn, initialValue) {
     }
     accumulator = this[i++];
   }
-  for (let i = 0; i < this.length; i++) {
+  for (i; i < this.length; i++) {
     if (i in this) {
       accumulator = callbackFn(accumulator, this[i], i, this);
     }
@@ -17,9 +17,9 @@ Array.prototype.Reduce = function (callbackFn, initialValue) {
   return accumulator;
 };
 
-let arr = [1, 2, 3, 4, , 5];
+let arr = [, 2, 3, 4, , 5];
 let res = arr.Reduce((acc, curr) => {
   return acc + curr;
-}, 0);
+});
 
 console.log("res", res);
