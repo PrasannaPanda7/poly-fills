@@ -20,6 +20,6 @@ Array.prototype.Some = function (callback, context) {
     if (callback.call(context, arr[i], i, arr)) {
       return true;
     }
-    return false;
   }
+  return false;
 };

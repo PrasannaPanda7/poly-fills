@@ -1,15 +1,16 @@
 function deepCopy(obj) {
-  if (["number", "boolean", "string", "undefined", "null"].includes(typeof obj))
+  if (obj === null || typeof obj !== "object") {
+    // as typeof null = undefined
     return obj;
+  }
 
   if (Array.isArray(obj)) {
     return obj.map((e) => deepCopy(e));
   } else if (typeof obj === "object") {
     let newobj = {};
-    Object.keys(obj).reduce((acc, key) => {
-      acc[key] = deepCopy(obj[key]);
-      return acc;
-    }, newobj);
+    Object.keys(obj).forEach((key) => {
+      newobj[key] = deepCopy(obj[key]);
+    });
     return newobj;
   }
 }
