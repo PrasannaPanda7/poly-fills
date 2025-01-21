@@ -1,14 +1,21 @@
-function useMemoCustom(callback) {
+function useMemoCustom(callback, capacity = 10) {
   const map = new Map();
   function memoizedCallBack(...args) {
     const index = JSON.stringify(args);
+    let res = null;
     if (map.has(index)) {
-      return map.get(index);
+      res = map.get(index);
+      map.delete(index);
     } else {
-      const res = callback(...args);
-      map.set(index, res);
-      return res;
+      res = callback(...args);
     }
+
+    if (map.size === capacity) {
+      map.delete(map.keys().next().value);
+    }
+
+    map.set(index, res);
+    return res;
   }
   return memoizedCallBack;
 }
